@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
             // Adjust player rotation to align with the surface
             Vector2 surfaceUp = currentSurface.transform.up;
-            //transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.FromToRotation(Vector2.up, surfaceDirection),Time.fixedDeltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.FromToRotation(Vector2.up, surfaceDirection),Time.fixedDeltaTime * 10f);
         }
         else
         {
