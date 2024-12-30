@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 525727004637859996}
   - component: {fileID: 56080487466492958}
   - component: {fileID: 3666138898669399426}
-  - component: {fileID: 215586395871038197}
   - component: {fileID: -6249531339393066160}
   m_Layer: 0
   m_Name: Player
@@ -164,36 +163,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &215586395871038197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4430296163673877177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 6198dca3447864047b1d084afd03822d, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Gameplay
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &-6249531339393066160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +179,61 @@ MonoBehaviour:
   jumpForce: 20
   gravityStrength: 100
   gravityCheckRadius: 2
+  gravityCheckRadius2: 2
+  playerInput:
+    m_Name: Player Input
+    m_Id: f70042de-b42c-4c6e-b864-7f55d7ab49e0
+    m_Asset: {fileID: 0}
+    m_Actions:
+    - m_Name: Move
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 48ac51d2-35c0-4751-be2c-a3ffd089fc8e
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    - m_Name: Jump
+      m_Type: 1
+      m_ExpectedControlType: Button
+      m_Id: 8ae386bb-b2de-4ba1-87fc-04c1c18d2be5
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Bindings:
+    - m_Name: 1D Axis
+      m_Id: 2c021953-3a56-4fae-9d15-93c60b21fdcb
+      m_Path: 1DAxis
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 4
+    - m_Name: negative
+      m_Id: 16dc0d42-59df-463f-9de3-3d4403fed187
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: positive
+      m_Id: 7ce0a766-515e-4e7f-8104-14862a998769
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: 
+      m_Id: 12a92028-3812-4250-a44f-c2d3ad918531
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Jump
+      m_Flags: 0
   surfaceLayers:
     serializedVersion: 2
     m_Bits: 256
-  isPlayerOne: 1

@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,9 +14,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask surfaceLayers;
 
     [Header("Player Settings")]
-    [SerializeField] private bool isPlayerOne = true;
+    [SerializeField] private bool isPlayerOne = true; // Player 1 or Player 2 [true = Player 1, false = Player 2
 
     private PlayerControls controls;
+
+
+
     private Rigidbody2D rb;
     private Collider2D playerCollider;
 
@@ -34,29 +38,36 @@ public class PlayerController : MonoBehaviour
         // Disable default gravity
         rb.gravityScale = 0;
 
-        // Setup input callbacks based on player
+        // Setup input callbacks
         if (isPlayerOne)
         {
-            controls.Gameplay.Player1Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-            controls.Gameplay.Player1Move.canceled += ctx => moveInput = Vector2.zero;
-            controls.Gameplay.Player1Jump.performed += ctx => Jump();
+            controls.Player1.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+            controls.Player1.Move.canceled += ctx => moveInput = Vector2.zero;
+            controls.Player1.Jump.performed += ctx => Jump();
         }
         else
         {
-            controls.Gameplay.Player2Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
-            controls.Gameplay.Player2Move.canceled += ctx => moveInput = Vector2.zero;
-            controls.Gameplay.Player2Jump.performed += ctx => Jump();
+            controls.Player2.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
+            controls.Player2.Move.canceled += ctx => moveInput = Vector2.zero;
+            controls.Player2.Jump.performed += ctx => Jump();
         }
+
     }
 
     private void OnEnable()
     {
-        controls.Gameplay.Enable();
+        if (isPlayerOne)
+            controls.Player1.Enable();
+        else
+            controls.Player2.Enable();
     }
 
     private void OnDisable()
     {
-        controls.Gameplay.Disable();
+        if (isPlayerOne)
+            controls.Player1.Disable();
+        else
+            controls.Player2.Disable();
     }
 
     private void FixedUpdate()
@@ -108,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
             // Adjust player rotation to align with the surface
             Vector2 surfaceUp = currentSurface.transform.up;
-            transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.FromToRotation(Vector2.up, surfaceDirection),Time.fixedDeltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector2.up, surfaceDirection), Time.fixedDeltaTime * 10f);
         }
         else
         {
@@ -146,7 +157,7 @@ public class PlayerController : MonoBehaviour
     {
         // Simple ground check using the current surface detection
         isGrounded = currentSurface != null &&
-            Vector2.Distance(transform.position, currentSurface.ClosestPoint(transform.position)) <= 0.1f + playerCollider.bounds.size.y/2;
+            Vector2.Distance(transform.position, currentSurface.ClosestPoint(transform.position)) <= 0.1f + playerCollider.bounds.size.y / 2;
     }
 
     private void OnDrawGizmosSelected()
