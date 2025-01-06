@@ -1,3 +1,4 @@
+using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,12 +6,12 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private float gravityStrength = 20f;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float jumpForce = 20f;
+    [SerializeField] private float gravityStrength = 100f;
 
     [Header("Surface Detection")]
-    [SerializeField] private float gravityCheckRadius = 2f;
+    [SerializeField] private float gravityCheckRadius = 5f;
     [SerializeField] private LayerMask surfaceLayers;
 
     [Header("Player Settings")]
@@ -18,14 +19,11 @@ public class PlayerController : MonoBehaviour
 
     private PlayerControls controls;
 
-
-
     private Rigidbody2D rb;
     private Collider2D playerCollider;
 
     private Collider2D currentSurface;
     private Vector2 moveInput;
-    private bool isGrounded;
 
     private void Awake()
     {
@@ -35,8 +33,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
 
-        // Disable default gravity
-        rb.gravityScale = 0;
+       
 
         // Setup input callbacks
         if (isPlayerOne)
@@ -51,7 +48,6 @@ public class PlayerController : MonoBehaviour
             controls.Player2.Move.canceled += ctx => moveInput = Vector2.zero;
             controls.Player2.Jump.performed += ctx => Jump();
         }
-
     }
 
     private void OnEnable()
@@ -75,9 +71,12 @@ public class PlayerController : MonoBehaviour
         FindNearestSurface();
         HandleGravity();
         HandleMovement();
-        CheckGrounded();
     }
 
+
+    /*
+    FindNearestSurface checks an area around the player for surfaces and stores the nearest one in currentSurface.
+    */
     private void FindNearestSurface()
     {
         Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(transform.position, gravityCheckRadius, surfaceLayers);
@@ -100,10 +99,6 @@ public class PlayerController : MonoBehaviour
 
             currentSurface = nearestSurface;
         }
-        else
-        {
-            currentSurface = null;
-        }
     }
 
     private void HandleGravity()
@@ -118,14 +113,26 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(surfaceDirection * gravityStrength);
 
             // Adjust player rotation to align with the surface
-            Vector2 surfaceUp = currentSurface.transform.up;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.FromToRotation(Vector2.up, surfaceDirection), Time.fixedDeltaTime * 10f);
+            // TODO: adjust rotation based on player sprites
+            // Calculate the target angle based on the surface direction
+            float targetAngle = Mathf.Atan2(surfaceDirection.y, surfaceDirection.x) * Mathf.Rad2Deg - 90f;
+
+            // Flip the player 180 degrees
+            targetAngle += 180f;
+
+            // Smoothly interpolate the rotation from the current angle to the target angle
+            float smoothAngle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, Time.fixedDeltaTime * 10f);
+
+            // Apply the smoothed rotation
+            transform.rotation = Quaternion.Euler(0f, 0f, smoothAngle);
+
         }
         else
         {
             rb.AddForce(Vector2.down * gravityStrength);
         }
     }
+
 
     private void HandleMovement()
     {
@@ -144,7 +151,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        if (isGrounded)
+        if (IsGrounded())
         {
             Vector2 closestPoint = currentSurface.ClosestPoint(transform.position);
             Vector2 jumpDirection = (transform.position - (Vector3)closestPoint).normalized;
@@ -153,11 +160,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void CheckGrounded()
+    private bool IsGrounded()
     {
         // Simple ground check using the current surface detection
-        isGrounded = currentSurface != null &&
-            Vector2.Distance(transform.position, currentSurface.ClosestPoint(transform.position)) <= 0.1f + playerCollider.bounds.size.y / 2;
+        return currentSurface != null && Vector2.Distance(transform.position, currentSurface.ClosestPoint(transform.position)) <= 0.3f + playerCollider.bounds.size.y / 2;
     }
 
     private void OnDrawGizmosSelected()
