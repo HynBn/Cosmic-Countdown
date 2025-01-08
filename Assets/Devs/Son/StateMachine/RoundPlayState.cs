@@ -1,16 +1,23 @@
+using UnityEditor.Overlays;
 using UnityEngine;
 
 public class RoundPlayState : BaseState<GameState>
 {
-    private int player1Score;
-    private int player2Score;
+    private int player1Lives;
+    private int player2Lives;
 
     private bool isRoundActive;
 
+    //private Player player1;
+    //private Player player2;
+
     public RoundPlayState() : base(GameState.RoundPlay)
     {
-        player1Score = 0;
-        player2Score = 0;
+        //player1 = GameObject.Find("Player1").GetComponent<Player>();
+        //player1 = GameObject.Find("Player1").GetComponent<Player>();
+
+        player1Lives = 3;
+        player2Lives = 3;
         isRoundActive = false;
     }
 
@@ -27,9 +34,13 @@ public class RoundPlayState : BaseState<GameState>
 
     public override void UpdateState()
     {
+        
+
         if (isRoundActive)
         {
             Debug.Log("Round is being played");
+
+            //if bomb timer not 0 {}
 
             // Simulate round end condition for example purposes
             if (Input.GetKeyDown(KeyCode.A))
@@ -45,8 +56,10 @@ public class RoundPlayState : BaseState<GameState>
 
     public override GameState GetNextState()
     {
-        if (player1Score == 3 || player2Score == 3)
+        if (player1Lives == 0 || player2Lives == 0)
         {
+            string winner = player1Lives == 0 ? "Player1" : "Player2";
+            PlayerPrefs.SetString("Winner", winner);
             return GameState.EndGame;
         }
 
@@ -57,6 +70,8 @@ public class RoundPlayState : BaseState<GameState>
     {
         isRoundActive = true;
         Debug.Log("Round started");
+
+        //spawn players at spawn location 
     }
 
     private void EndRound(bool player1Won)
@@ -65,16 +80,16 @@ public class RoundPlayState : BaseState<GameState>
 
         if (player1Won)
         {
-            player1Score++;
-            Debug.Log("Player 1 wins the round. Score: " + player1Score);
+            player1Lives--;
+            Debug.Log("Player 1 wins the round. Score: " + player1Lives);
         }
         else
         {
-            player2Score++;
-            Debug.Log("Player 2 wins the round. Score: " + player2Score);
+            player2Lives--;
+            Debug.Log("Player 2 wins the round. Score: " + player2Lives);
         }
 
-        if (player1Score < 3 && player2Score < 3)
+        if (player1Lives > 0 && player2Lives > 0)
         {
             StartRound();
         }

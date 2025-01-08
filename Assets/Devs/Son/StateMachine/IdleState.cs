@@ -7,8 +7,6 @@ public class IdleState : BaseState<GameState>
     public override void Enterstate()
     {
         Debug.Log("Entering Idle State");
-
-        //movement = false;
     }
 
     public override void ExitState()

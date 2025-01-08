@@ -17,11 +17,7 @@ public class EndGameState : BaseState<GameState>
 
     public override void UpdateState()
     {
-        // Wait for restart or exit input
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("Restarting Game");
-        }
+        // Change scene to the end screen
     }
 
     public override GameState GetNextState()
