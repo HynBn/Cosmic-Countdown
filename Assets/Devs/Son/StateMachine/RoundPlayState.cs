@@ -7,6 +7,7 @@ public class RoundPlayState : BaseState<GameState>
     private int player2Lives;
 
     private bool isRoundActive;
+    private Collider2D collider2D;
 
     //private Player player1;
     //private Player player2;
@@ -14,11 +15,12 @@ public class RoundPlayState : BaseState<GameState>
     public RoundPlayState() : base(GameState.RoundPlay)
     {
         //player1 = GameObject.Find("Player1").GetComponent<Player>();
-        //player1 = GameObject.Find("Player1").GetComponent<Player>();
+        //player2 = GameObject.Find("Player2").GetComponent<Player>();
 
         player1Lives = 3;
         player2Lives = 3;
         isRoundActive = false;
+        collider2D = GameObject.Find("Player1").GetComponent<Collider2D>();
     }
 
     public override void Enterstate()
@@ -41,6 +43,8 @@ public class RoundPlayState : BaseState<GameState>
             Debug.Log("Round is being played");
 
             //if bomb timer not 0 {}
+
+            
 
             // Simulate round end condition for example purposes
             if (Input.GetKeyDown(KeyCode.A))
@@ -71,7 +75,7 @@ public class RoundPlayState : BaseState<GameState>
         isRoundActive = true;
         Debug.Log("Round started");
 
-        //spawn players at spawn location 
+        //Instantiate and set fields to the player
     }
 
     private void EndRound(bool player1Won)

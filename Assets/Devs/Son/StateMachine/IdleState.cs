@@ -26,7 +26,7 @@ public class IdleState : BaseState<GameState>
     public override GameState GetNextState()
     {
         // Transition to RoundPlay when the game starts
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)) // if start button pressed
         {
             return GameState.RoundPlay;
         }
