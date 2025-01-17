@@ -5,10 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private float jumpForce = 20f;
-    [SerializeField] private float gravityStrength = 100f;
+    private PlayerAttributes playerAttributes;
 
     [Header("Surface Detection")]
     [SerializeField] private float gravityCheckRadius = 5f;
@@ -27,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        playerAttributes = GetComponent<PlayerAttributes>();
+
         // Initialize input controls
         controls = new PlayerControls();
 
@@ -110,7 +109,7 @@ public class PlayerController : MonoBehaviour
             Vector2 surfaceDirection = (closestPoint - (Vector2)transform.position).normalized;
 
             // Apply gravity in the direction of the surface
-            rb.AddForce(surfaceDirection * gravityStrength);
+            rb.AddForce(surfaceDirection * playerAttributes.GravityStrength);
 
             // Adjust player rotation to align with the surface
             // TODO: adjust rotation based on player sprites
@@ -129,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.AddForce(Vector2.down * gravityStrength);
+            rb.AddForce(Vector2.down * playerAttributes.GravityStrength);
         }
     }
 
@@ -144,7 +143,7 @@ public class PlayerController : MonoBehaviour
             Vector2 surfaceRight = new Vector2(-surfaceDirection.y, surfaceDirection.x); // Perpendicular to surface direction
 
             // Move the player along the surface
-            Vector2 movementVector = surfaceRight * moveInput.x * moveSpeed;
+            Vector2 movementVector = surfaceRight * moveInput.x * playerAttributes.MoveSpeed * playerAttributes.Direction;
             rb.linearVelocity = movementVector + Vector2.Dot(rb.linearVelocity, surfaceDirection) * surfaceDirection; // Combine with any residual surface motion
         }
     }
@@ -156,7 +155,7 @@ public class PlayerController : MonoBehaviour
             Vector2 closestPoint = currentSurface.ClosestPoint(transform.position);
             Vector2 jumpDirection = (transform.position - (Vector3)closestPoint).normalized;
 
-            rb.AddForce(jumpDirection * jumpForce, ForceMode2D.Impulse);
+            rb.AddForce(jumpDirection * playerAttributes.JumpForce, ForceMode2D.Impulse);
         }
     }
 
