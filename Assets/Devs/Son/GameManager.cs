@@ -5,10 +5,17 @@ public class GameManager : MonoBehaviour
     private int player1Lives;
     private int player2Lives;
 
+    private Vector3 Spawn1;
+    private Vector3 Spawn2;
+
     private bool isRoundActive;
 
-    /////////private Player player1;
-    /////////private Player player2;
+    private GameObject player1;
+    private GameObject player2;
+
+    private PlayerAttributes player1Attributes;
+    private PlayerAttributes player2Attributes;
+
 
     private bool player1HasBomb;
 
@@ -18,18 +25,33 @@ public class GameManager : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        /////////player1 = GameObject.Find("Player1").GetComponent<Player>();
-        /////////player2 = GameObject.Find("Player2").GetComponent<Player>();
+        player1 = GameObject.Find("Player1");
+        player2 = GameObject.Find("Player1");
+
+        Spawn1 = GameObject.Find("SpawnLocation1").transform.position;
+        Spawn2 = GameObject.Find("SpawnLocation2").transform.position;
+
+        player1Attributes = GameObject.Find("Player1").GetComponent<PlayerAttributes>();
+        player2Attributes = GameObject.Find("Player2").GetComponent<PlayerAttributes>();
 
         player1Lives = 3;
         player2Lives = 3;
         isRoundActive = false;
-        ////collider2D = GameObject.Find("Player1").GetComponent<Collider2D>();
 
-        /////////int chance = UnityEngine.Random.Range(1, 2);
-        /////////if (chance == 1) Player1.updateBombStatus;
+        int chance = UnityEngine.Random.Range(1, 2);
+        if (chance == 1)
+        {
+            player1Attributes.HasBomb = true;
+            player2Attributes.HasBomb = false;
+        }
+        else
+        {
+            player1Attributes.HasBomb = false;
+            player2Attributes.HasBomb = true;
+        }
+        StartRound();
     }
 
     // Update is called once per frame
@@ -37,10 +59,13 @@ public class GameManager : MonoBehaviour
     {
         if (isRoundActive)
         {
-            /////////player1HasBomb = Player1.HasBomb ? true : false;
+            //player1HasBomb = player1.HasBomb ? true : false;
+            player1HasBomb = GameObject.Find("Player1").GetComponent<PlayerAttributes>().HasBomb ? true : false;
+
+
             Debug.Log("Round is being played");
 
-            //if bomb timer not 0 {}
+            //if bomb timer not 0
             if (currentTime <= 0)
             {
                 EndRound(); 
@@ -52,14 +77,18 @@ public class GameManager : MonoBehaviour
     private void StartRound()
     {
         isRoundActive = true;
+        placePlayersToSpawn();
+
         currentTime = timerDuration;
         StartCoroutine(StartTimer());
-        //Instantiate and set fields to the player
+
+        
     }
 
     private void EndRound()
     {
         isRoundActive = false;
+
 
         if (player1HasBomb)
         {
@@ -112,5 +141,11 @@ public class GameManager : MonoBehaviour
     public void StopTimer()
     {
         timerRunning = false;
+    }
+
+    private void placePlayersToSpawn()
+    {
+        player1.transform.position = Spawn1;
+        player2.transform.position = Spawn2;
     }
 }
