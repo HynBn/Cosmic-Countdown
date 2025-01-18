@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour, IGameContext
     [SerializeField] private Player player2;
     [SerializeField] private float timerDuration = 15f;
     [SerializeField] private float roundDelay = 3f;
+    [SerializeField] private InGameUI gameUI;
 
     public float CurrentTime { get; private set; }
     public int Player1Lives { get; private set; }
@@ -59,9 +60,13 @@ public class GameManager : MonoBehaviour, IGameContext
         SetPlayerControlsEnabled(false);
         PlacePlayersAtSpawns();
 
-        Debug.Log($"Waiting {roundDelay} seconds before starting the next round...");
+        if (gameUI != null)
+        {
+            gameUI.ShowRoundStartCountdown(roundDelay);
+        }
+
         yield return new WaitForSeconds(roundDelay);
-        Debug.Log("Starting the next round!");
+
 
         // End round transition and start round
         isRoundActive = true;

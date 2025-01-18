@@ -42,7 +42,7 @@ public class ItemRocket : MonoBehaviour
         {
             isActive = false;
             // Stop the player's movement for the stun duration
-            hitPlayer.Modifier.ModifyMoveSpeed(0f, stunDuration);
+            hitPlayer.Modifier.ModifyMoveSpeed(0.2f, stunDuration);
             Destroy(gameObject);
         }
     }
