@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour/*, IGameContext*/
 {
     private int player1Lives;
     private int player2Lives;
 
-    private Vector3 Spawn1;
-    private Vector3 Spawn2;
+    private Vector3 spawn1;
+    private Vector3 spawn2;
 
     private bool isRoundActive;
 
@@ -22,36 +22,45 @@ public class GameManager : MonoBehaviour
     public float timerDuration = 10f;  // Initial duration of the timer
     private float currentTime;
     private bool timerRunning = true;
-
+    public float roundDelay = 3f; // Time to wait between rounds
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         player1 = GameObject.Find("Player1");
-        player2 = GameObject.Find("Player1");
+        player2 = GameObject.Find("Player2");
 
-        Spawn1 = GameObject.Find("SpawnLocation1").transform.position;
-        Spawn2 = GameObject.Find("SpawnLocation2").transform.position;
+        spawn1 = GameObject.Find("Spawn1").transform.position;
+        spawn2 = GameObject.Find("Spawn2").transform.position;
 
         player1Attributes = GameObject.Find("Player1").GetComponent<PlayerAttributes>();
         player2Attributes = GameObject.Find("Player2").GetComponent<PlayerAttributes>();
 
-        player1Lives = 3;
-        player2Lives = 3;
+        
+
+        player1Lives = 2;
+        player2Lives = 2;
         isRoundActive = false;
+
 
         int chance = UnityEngine.Random.Range(1, 2);
         if (chance == 1)
         {
             player1Attributes.HasBomb = true;
             player2Attributes.HasBomb = false;
+
+            //player1.Attributes.HasBomb = true;
+            //player2.Attributes.HasBomb = false;
         }
         else
         {
             player1Attributes.HasBomb = false;
             player2Attributes.HasBomb = true;
+
+            //player1.Attributes.HasBomb = false;
+            //player2.Attributes.HasBomb = true;
         }
-        StartRound();
+
     }
 
     // Update is called once per frame
@@ -59,11 +68,12 @@ public class GameManager : MonoBehaviour
     {
         if (isRoundActive)
         {
+            
             //player1HasBomb = player1.HasBomb ? true : false;
-            player1HasBomb = GameObject.Find("Player1").GetComponent<PlayerAttributes>().HasBomb ? true : false;
+            player1HasBomb = player1Attributes.HasBomb ? true : false;
+            //player1HasBomb = player1.Attributes.HasBomb ? true : false;
 
-
-            Debug.Log("Round is being played");
+            //Debug.Log("Round is being played");
 
             //if bomb timer not 0
             if (currentTime <= 0)
@@ -74,7 +84,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void StartRound()
+    public void StartRound()
     {
         isRoundActive = true;
         placePlayersToSpawn();
@@ -93,12 +103,12 @@ public class GameManager : MonoBehaviour
         if (player1HasBomb)
         {
             player1Lives--;
-            Debug.Log("Player 1 wins the round. Score: " + player1Lives);
+            Debug.Log("Player 2 wins the round. Score: " + player1Lives);
         }
         else
         {
             player2Lives--;
-            Debug.Log("Player 2 wins the round. Score: " + player2Lives);
+            Debug.Log("Player 1 wins the round. Score: " + player2Lives);
         }
 
         if (player1Lives == 0 || player2Lives == 0)
@@ -107,15 +117,17 @@ public class GameManager : MonoBehaviour
         } 
         else
         {
-            StartRound();
+            //StartRound();
+            StartCoroutine(DelayedStartRound());
         }
     }
 
     private void EndGame()
     {
-        string winner = player1Lives == 0 ? "Player1" : "Player2";
+        string winner = player1Lives == 0 ? "Player2" : "Player1";
         PlayerPrefs.SetString("Winner", winner);
-        /////////SceneManager switch to End Screen
+        //MySceneManager.Instance.LoadEndScreen();
+        Debug.Log($"Game Ended, Winner: {winner}");
     }
 
     private IEnumerator StartTimer()
@@ -128,6 +140,15 @@ public class GameManager : MonoBehaviour
         }
 
         
+    }
+
+    private IEnumerator DelayedStartRound()
+    {
+        Debug.Log($"Waiting {roundDelay} seconds before starting the next round...");
+        yield return new WaitForSeconds(roundDelay);
+        Debug.Log("Starting the next round!");
+
+        StartRound();
     }
 
     // Public method to add time to the timer
@@ -145,7 +166,23 @@ public class GameManager : MonoBehaviour
 
     private void placePlayersToSpawn()
     {
-        player1.transform.position = Spawn1;
-        player2.transform.position = Spawn2;
+        player1.transform.position = spawn1;
+        player2.transform.position = spawn2;
+
+        //Transform p1position = player1.gameobject.position;
+        //Transform p2position = player2.gameobject.position;
     }
+
+
+
+    float GetBombTimer() => currentTime;
+    
+    void SetBombTimer(float time)
+    {
+        currentTime = time;
+    }
+
+    //Player[] GetPlayers() => Player[player1, player2].ToArray();
+
+    bool IsGameActive() => isRoundActive;
 }
