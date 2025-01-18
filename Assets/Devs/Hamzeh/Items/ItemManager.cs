@@ -1,12 +1,19 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] private Player player1;
     [SerializeField] private Player player2;
-    [SerializeField] private MonoBehaviour gameContextObject;  // Reference in inspector to object implementing IGameContext
+    [SerializeField] private MonoBehaviour gameContextObject;
+    [SerializeField] private Transform spawnPointsParent;
+    [SerializeField] private List<BaseItem> itemPrefabs = new List<BaseItem>();
 
+    private const int MAX_ITEMS = 3;
+    private const float SPAWN_INTERVAL = 5f;
+    private List<Transform> availableSpawnPoints;
+    private int currentItemCount = 0;
     private IGameContext gameContext;
 
     private void Awake()
@@ -19,33 +26,64 @@ public class ItemManager : MonoBehaviour
         }
 
         Player[] players = gameContext.GetPlayers();
-
-        if (players == null)
-        {
-            Debug.LogError("GetPlayers() returned null!");
-            return;
-        }
-
-        if (players.Length < 2)
-        {
-            Debug.LogError($"Insufficient players retrieved. Expected 2, but got {players.Length}.");
-            return;
-        }
-
         player1 = players[0];
         player2 = players[1];
 
-        if (player1 == null || player2 == null)
+        // Validate spawn points parent
+        if (spawnPointsParent == null)
         {
-            Debug.LogError("One or more players are null after retrieval!");
+            Debug.LogError("SpawnPoints parent not assigned to ItemManager!");
+            return;
+        }
+
+        // Initialize available spawn points with all children of the SpawnPoints object
+        availableSpawnPoints = new List<Transform>();
+        foreach (Transform child in spawnPointsParent)
+        {
+            availableSpawnPoints.Add(child);
+        }
+
+        if (availableSpawnPoints.Count == 0)
+        {
+            Debug.LogWarning("No spawn points found in SpawnPoints parent!");
+        }
+
+        StartCoroutine(SpawnRoutine());
+    }
+
+    private IEnumerator SpawnRoutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(SPAWN_INTERVAL);
+
+            if (gameContext.IsGameActive() && currentItemCount < MAX_ITEMS && availableSpawnPoints.Count > 0)
+            {
+                SpawnRandomItem();
+            }
         }
     }
 
-    public BaseItem SpawnItem(BaseItem itemPrefab, Vector3 position)
+    private void SpawnRandomItem()
     {
-        BaseItem item = Instantiate(itemPrefab, position, Quaternion.identity);
-        item.Initialize(this);
-        return item;
+        if (availableSpawnPoints.Count == 0 || itemPrefabs.Count == 0) return;
+
+        // Get random spawn point and remove it from available points
+        int spawnIndex = Random.Range(0, availableSpawnPoints.Count);
+        Transform spawnPoint = availableSpawnPoints[spawnIndex];
+        availableSpawnPoints.RemoveAt(spawnIndex);
+
+        // Spawn random item
+        BaseItem itemPrefab = itemPrefabs[Random.Range(0, itemPrefabs.Count)];
+        BaseItem item = Instantiate(itemPrefab, spawnPoint.position, Quaternion.identity);
+        item.Initialize(this, spawnPoint);
+        currentItemCount++;
+    }
+
+    public void OnItemCollected(Transform spawnPoint)
+    {
+        availableSpawnPoints.Add(spawnPoint);
+        currentItemCount--;
     }
 
     public Player GetOtherPlayer(Player currentPlayer)
@@ -68,14 +106,15 @@ public class ItemManager : MonoBehaviour
         return gameContext.IsGameActive();
     }
 
-    public void SpawnTrapAfterDelay(GameObject prefab, Vector3 position, float delay)
-    { 
-        StartCoroutine(SpawnTrapAfterDelayCoroutine(prefab, position, delay));
+    public void SpawnTrapAfterDelay(GameObject prefab, Vector3 position, float delay, Transform spawnPoint)
+    {
+        StartCoroutine(SpawnTrapAfterDelayCoroutine(prefab, position, delay, spawnPoint));
     }
-    private IEnumerator SpawnTrapAfterDelayCoroutine(GameObject prefab, Vector3 position, float delay)
+
+    private IEnumerator SpawnTrapAfterDelayCoroutine(GameObject prefab, Vector3 position, float delay, Transform spawnPoint)
     {
         yield return new WaitForSeconds(delay);
         GameObject trap = Instantiate(prefab, position, Quaternion.identity);
-        trap.GetComponent<BaseItem>().Initialize(this);
+        trap.GetComponent<BaseItem>().Initialize(this, spawnPoint);
     }
 }
