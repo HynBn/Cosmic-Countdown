@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return currentSurface != null && Vector2.Distance(transform.position, currentSurface.ClosestPoint(transform.position)) <= 0.3f + playerCollider.bounds.size.y / 2;
+        return currentSurface != null && Vector2.Distance(transform.position, currentSurface.ClosestPoint(transform.position)) <= 0.5f + playerCollider.bounds.size.y / 2;
     }
 
     private void OnDrawGizmosSelected()
