@@ -3,36 +3,36 @@ using UnityEngine;
 public class BombInteraction : MonoBehaviour
 {
     private SpriteRenderer bombSprite;
-    private PlayerAttributes playerAttributes;
+    private Player player;
     private bool canTransferBomb = true;
     private float transferCooldown = 0.5f;
 
     private void Awake()
     {
         bombSprite = GetComponent<SpriteRenderer>();
-        playerAttributes = transform.parent.GetComponent<PlayerAttributes>();
+        player = transform.parent.GetComponent<Player>();
 
         if (bombSprite == null)
         {
             Debug.LogError($"No SpriteRenderer found on {gameObject.name}!");
         }
-        if (playerAttributes == null)
+        if (player == null)
         {
-            Debug.LogError($"No PlayerAttributes found on parent of {gameObject.name}!");
+            Debug.LogError($"No Player component found on parent of {gameObject.name}!");
         }
     }
 
     private void Start()
     {
-        playerAttributes.OnBombStatusChanged += HandleBombStatusChanged;
-        bombSprite.enabled = playerAttributes.HasBomb;
+        player.Attributes.OnBombStatusChanged += HandleBombStatusChanged;
+        bombSprite.enabled = player.Attributes.HasBomb;
     }
 
     private void OnDestroy()
     {
-        if (playerAttributes != null)
+        if (player != null)
         {
-            playerAttributes.OnBombStatusChanged -= HandleBombStatusChanged;
+            player.Attributes.OnBombStatusChanged -= HandleBombStatusChanged;
         }
     }
 
@@ -43,13 +43,13 @@ public class BombInteraction : MonoBehaviour
 
     public void SetBombStatus(bool hasBomb)
     {
-        playerAttributes.HasBomb = hasBomb;
+        player.Attributes.HasBomb = hasBomb;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Only handle collision if we have the bomb and can transfer
-        if (!playerAttributes.HasBomb || !canTransferBomb) return;
+        if (!player.Attributes.HasBomb || !canTransferBomb) return;
 
         BombInteraction otherBomb = collision.GetComponent<BombInteraction>();
         if (otherBomb != null && otherBomb.canTransferBomb)
