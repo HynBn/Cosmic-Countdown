@@ -2,12 +2,13 @@ using UnityEngine;
 
 public abstract class BaseItem : MonoBehaviour
 {
-    [SerializeField]
     protected ItemManager itemManager;
+    protected Transform spawnPoint;
 
-    public void Initialize(ItemManager manager)
+    public void Initialize(ItemManager manager, Transform spawn)
     {
         itemManager = manager;
+        spawnPoint = spawn;
     }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
@@ -17,9 +18,20 @@ public abstract class BaseItem : MonoBehaviour
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {
-            ApplyEffect(player);
+            HandleCollection(player);
             Destroy(gameObject);
         }
+    }
+
+    protected virtual void HandleCollection(Player player)
+    {
+        ReturnSpawnPoint();
+        ApplyEffect(player);
+    }
+
+    protected void ReturnSpawnPoint()
+    {
+        itemManager.OnItemCollected(spawnPoint);
     }
 
     protected abstract void ApplyEffect(Player player);
