@@ -13,8 +13,6 @@ public abstract class BaseItem : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!itemManager.IsGameActive()) return;
-
         Player player = collision.GetComponent<Player>();
         if (player != null)
         {

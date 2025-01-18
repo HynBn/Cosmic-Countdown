@@ -61,6 +61,11 @@ public class PlayerController : MonoBehaviour
             controls.Player1.Disable();
         else
             controls.Player2.Disable();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
     }
 
     private void FixedUpdate()
