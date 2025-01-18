@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviour, IGameContext
         string winner = Player1Lives == 0 ? "Player2" : "Player1";
         PlayerPrefs.SetString("Winner", winner);
         Debug.Log($"Game Ended, Winner: {winner}");
+        MySceneManager.Instance.LoadMap2();
     }
 
     private IEnumerator StartTimer()
