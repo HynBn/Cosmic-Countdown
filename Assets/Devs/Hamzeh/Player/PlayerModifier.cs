@@ -68,12 +68,12 @@ public class PlayerModifier : MonoBehaviour
 
     private IEnumerator TemporarySpeedModification(float speedMultiplier, float duration)
     {
-        float originalSpeed = player.Attributes.MoveSpeed;
+
         player.Attributes.MoveSpeed = player.Attributes.BaseMoveSpeed * speedMultiplier;
 
         yield return new WaitForSeconds(duration);
 
-        player.Attributes.MoveSpeed = originalSpeed;
+        player.Attributes.MoveSpeed = player.Attributes.BaseMoveSpeed;
     }
 
     private IEnumerator TemporaryJumpModification(float jumpMultiplier, float duration)
