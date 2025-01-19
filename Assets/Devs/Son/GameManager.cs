@@ -142,6 +142,7 @@ public class GameManager : MonoBehaviour, IGameContext
         PlacePlayersAtSpawns();
         string winner = Player1Lives == 0 ? "Player2" : "Player1";
         PlayerPrefs.SetString("Winner", winner);
+
     }
 
     private IEnumerator StartTimer()
