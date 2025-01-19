@@ -60,11 +60,17 @@ public class BombInteraction : MonoBehaviour
 
             SetBombStatus(false);
             otherBomb.SetBombStatus(true);
+            otherBomb.SlowOnBombPickup();
 
             // Reset transfer ability after cooldown for both objects
             Invoke(nameof(ResetTransferAbility), transferCooldown);
             otherBomb.Invoke(nameof(ResetTransferAbility), transferCooldown);
         }
+    }
+
+    public void SlowOnBombPickup()
+    {
+        player.Modifier.ModifyMoveSpeed(0.5f, 0.5f);
     }
 
     private void ResetTransferAbility()

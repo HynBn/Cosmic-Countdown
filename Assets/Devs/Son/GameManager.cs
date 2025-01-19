@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour, IGameContext
     [SerializeField] private Player player2;
     [SerializeField] private float timerDuration = 15f;
     [SerializeField] private float roundDelay = 3f;
+    [SerializeField] private InGameUI gameUI;
 
     public float CurrentTime { get; private set; }
     public int Player1Lives { get; private set; }
@@ -24,7 +25,14 @@ public class GameManager : MonoBehaviour, IGameContext
         {
             isPaused = value;
             Time.timeScale = value ? 0f : 1f;
-            SetPlayerControlsEnabled(!isPaused);
+            if (!value && isRoundActive) 
+            {
+                SetPlayerControlsEnabled(true);
+            }
+            else if (value) 
+            {
+                SetPlayerControlsEnabled(false);
+            }
         }
     }
 
@@ -59,9 +67,13 @@ public class GameManager : MonoBehaviour, IGameContext
         SetPlayerControlsEnabled(false);
         PlacePlayersAtSpawns();
 
-        Debug.Log($"Waiting {roundDelay} seconds before starting the next round...");
+        if (gameUI != null)
+        {
+            gameUI.ShowRoundStartCountdown(roundDelay);
+        }
+
         yield return new WaitForSeconds(roundDelay);
-        Debug.Log("Starting the next round!");
+
 
         // End round transition and start round
         isRoundActive = true;
@@ -118,12 +130,10 @@ public class GameManager : MonoBehaviour, IGameContext
         if (player1.Attributes.HasBomb)
         {
             Player1Lives--;
-            Debug.Log($"Player 2 wins the round. P1 Lives: {Player1Lives}, P2 Lives: {Player2Lives}");
         }
         else
         {
             Player2Lives--;
-            Debug.Log($"Player 1 wins the round. P1 Lives: {Player1Lives}, P2 Lives: {Player2Lives}");
         }
     }
 
@@ -132,8 +142,7 @@ public class GameManager : MonoBehaviour, IGameContext
         PlacePlayersAtSpawns();
         string winner = Player1Lives == 0 ? "Player2" : "Player1";
         PlayerPrefs.SetString("Winner", winner);
-        Debug.Log($"Game Ended, Winner: {winner}");
-        MySceneManager.Instance.LoadMap2();
+
     }
 
     private IEnumerator StartTimer()
@@ -142,7 +151,6 @@ public class GameManager : MonoBehaviour, IGameContext
         {
             if (!IsPaused)
             {
-                Debug.Log($"Time left: {CurrentTime} seconds");
                 yield return new WaitForSeconds(1f);
                 CurrentTime--;
 
