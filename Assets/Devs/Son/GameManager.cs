@@ -7,8 +7,9 @@ public class GameManager : MonoBehaviour, IGameContext
     [SerializeField] private Transform spawn2;
     [SerializeField] private Player player1;
     [SerializeField] private Player player2;
-    [SerializeField] private float timerDuration = 15f;
+    [SerializeField] private float timerDuration = 30f;
     [SerializeField] private float roundDelay = 3f;
+    [SerializeField] private float endRoundDelay = 3f; 
     [SerializeField] private InGameUI gameUI;
 
     public float CurrentTime { get; private set; }
@@ -109,10 +110,17 @@ public class GameManager : MonoBehaviour, IGameContext
         CurrentTime = timerDuration;
     }
 
-    private void EndRound()
+    private IEnumerator EndRoundRoutine()
     {
+        yield return null;
         isRoundActive = false;
         SetPlayerControlsEnabled(false);
+
+        // This is where you could trigger any end-of-round animations or effects
+        // For example: gameUI.ShowRoundEndAnimation();
+
+        yield return new WaitForSeconds(endRoundDelay);
+
         UpdateLives();
 
         if (Player1Lives == 0 || Player2Lives == 0)
@@ -123,6 +131,11 @@ public class GameManager : MonoBehaviour, IGameContext
         {
             StartRound();
         }
+    }
+
+    private void EndRound()
+    {
+        StartCoroutine(EndRoundRoutine());
     }
 
     private void UpdateLives()
@@ -155,6 +168,8 @@ public class GameManager : MonoBehaviour, IGameContext
 
                 if (CurrentTime <= 0)
                 {
+                    CurrentTime = 0;  // Ensure timer is exactly 0
+                    yield return new WaitForEndOfFrame();  // Wait for UI to update
                     EndRound();
                 }
             }
