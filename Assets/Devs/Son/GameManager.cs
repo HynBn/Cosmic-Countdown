@@ -25,7 +25,14 @@ public class GameManager : MonoBehaviour, IGameContext
         {
             isPaused = value;
             Time.timeScale = value ? 0f : 1f;
-            SetPlayerControlsEnabled(!isPaused);
+            if (!value && isRoundActive) 
+            {
+                SetPlayerControlsEnabled(true);
+            }
+            else if (value) 
+            {
+                SetPlayerControlsEnabled(false);
+            }
         }
     }
 
@@ -123,12 +130,10 @@ public class GameManager : MonoBehaviour, IGameContext
         if (player1.Attributes.HasBomb)
         {
             Player1Lives--;
-            Debug.Log($"Player 2 wins the round. P1 Lives: {Player1Lives}, P2 Lives: {Player2Lives}");
         }
         else
         {
             Player2Lives--;
-            Debug.Log($"Player 1 wins the round. P1 Lives: {Player1Lives}, P2 Lives: {Player2Lives}");
         }
     }
 
@@ -137,7 +142,6 @@ public class GameManager : MonoBehaviour, IGameContext
         PlacePlayersAtSpawns();
         string winner = Player1Lives == 0 ? "Player2" : "Player1";
         PlayerPrefs.SetString("Winner", winner);
-        Debug.Log($"Game Ended, Winner: {winner}");
     }
 
     private IEnumerator StartTimer()
@@ -146,7 +150,6 @@ public class GameManager : MonoBehaviour, IGameContext
         {
             if (!IsPaused)
             {
-                Debug.Log($"Time left: {CurrentTime} seconds");
                 yield return new WaitForSeconds(1f);
                 CurrentTime--;
 
