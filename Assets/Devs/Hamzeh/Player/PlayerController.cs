@@ -8,9 +8,19 @@ public class PlayerController : MonoBehaviour
     [Header("Surface Detection")]
     [SerializeField] private float gravityCheckRadius = 5f;
     [SerializeField] private LayerMask surfaceLayers;
+    [SerializeField] private GameManager gameManager;
 
     [Header("Player Settings")]
     [SerializeField] private bool isPlayerOne = true; // Player 1 or Player 2 [true = Player 1, false = Player 2]
+
+    [Header("Animation")]
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+    private readonly string IS_MOVING = "IsMoving";
+    private readonly string IS_JUMPING = "IsJumping";
+    private readonly string TRIGGER_WIN = "TriggerWin";
+    private readonly string TRIGGER_EXPLODE = "TriggerExplode";
+    private readonly string TRIGGER_RESET = "TriggerReset";
 
     private PlayerControls controls;
     private Rigidbody2D rb;
@@ -18,19 +28,31 @@ public class PlayerController : MonoBehaviour
     private Collider2D currentSurface;
     private Vector2 moveInput;
 
+    // Cached surface calculations
+    private Vector2 surfaceDirection;
+    private Vector2 surfaceRight;
+
     private void Awake()
     {
+        // Get core components
         player = GetComponent<Player>();
         if (player == null)
-        {
             Debug.LogError($"No Player component found on {gameObject.name}!");
-        }
+
+        // Get physics components
+        rb = GetComponent<Rigidbody2D>();
+        playerCollider = GetComponent<Collider2D>();
+
+        // Get visual components
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        if (animator == null)
+            Debug.LogError($"Missing Animator component on {gameObject.name}!");
+        if (spriteRenderer == null)
+            Debug.LogError($"Missing SpriteRenderer component on {gameObject.name}!");
 
         // Initialize input controls
         controls = new PlayerControls();
-
-        rb = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<Collider2D>();
 
         // Setup input callbacks
         if (isPlayerOne)
@@ -70,9 +92,19 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        FindNearestSurface();
-        HandleGravity();
-        HandleMovement();
+        if (gameManager.IsGameActive())
+        {
+
+
+            FindNearestSurface();
+            CalculateSurfaceDirections();
+            HandleGravity();
+            HandleMovement();
+            UpdateMovementAnimation();
+
+            // Update jumping animation based on grounded state
+            animator.SetBool(IS_JUMPING, !IsGrounded());
+        }
     }
 
     private void FindNearestSurface()
@@ -97,16 +129,26 @@ public class PlayerController : MonoBehaviour
 
             currentSurface = nearestSurface;
         }
+        else
+        {
+            currentSurface = null;
+        }
+    }
+
+    private void CalculateSurfaceDirections()
+    {
+        if (currentSurface != null)
+        {
+            Vector2 closestPoint = currentSurface.ClosestPoint(transform.position);
+            surfaceDirection = (closestPoint - (Vector2)transform.position).normalized;
+            surfaceRight = new Vector2(-surfaceDirection.y, surfaceDirection.x);
+        }
     }
 
     private void HandleGravity()
     {
         if (currentSurface != null)
         {
-            // Calculate direction toward the current surface
-            Vector2 closestPoint = currentSurface.ClosestPoint(transform.position);
-            Vector2 surfaceDirection = (closestPoint - (Vector2)transform.position).normalized;
-
             // Apply gravity in the direction of the surface
             rb.AddForce(surfaceDirection * player.Attributes.GravityStrength);
 
@@ -130,12 +172,7 @@ public class PlayerController : MonoBehaviour
     {
         if (currentSurface != null)
         {
-            // Determine the rightward direction relative to the surface
-            Vector2 closestPoint = currentSurface.ClosestPoint(transform.position);
-            Vector2 surfaceDirection = (closestPoint - (Vector2)transform.position).normalized;
-            Vector2 surfaceRight = new Vector2(-surfaceDirection.y, surfaceDirection.x);
-
-            // Move the player along the surface
+            // Use precalculated directions for movement
             Vector2 movementVector = surfaceRight * moveInput.x * player.Attributes.MoveSpeed * player.Attributes.Direction;
             rb.linearVelocity = movementVector + Vector2.Dot(rb.linearVelocity, surfaceDirection) * surfaceDirection;
         }
@@ -145,10 +182,9 @@ public class PlayerController : MonoBehaviour
     {
         if (IsGrounded())
         {
-            Vector2 closestPoint = currentSurface.ClosestPoint(transform.position);
-            Vector2 jumpDirection = (transform.position - (Vector3)closestPoint).normalized;
-
+            Vector2 jumpDirection = -surfaceDirection;  // Using precalculated surface direction
             rb.AddForce(jumpDirection * player.Attributes.JumpForce, ForceMode2D.Impulse);
+            animator.SetBool(IS_JUMPING, true);
         }
     }
 
@@ -162,4 +198,51 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, gravityCheckRadius);
     }
+
+    // Animation ---------------------------------------------------------------
+
+    private void UpdateMovementAnimation()
+    {
+      
+        bool isMoving = Mathf.Abs(moveInput.x) > 0.1f;
+        animator.SetBool(IS_MOVING, isMoving);
+
+        if (isMoving && currentSurface != null)
+        {
+            // Using surfaceDirection.y to determine if we're upside down
+            bool isUpsideDown = surfaceDirection.y < 0;
+
+            // We already have surfaceRight calculated
+            bool movingRight = Vector2.Dot(moveInput, surfaceRight) > 0;
+
+            // Since sprite faces left by default, we invert the logic
+            spriteRenderer.flipX = isUpsideDown ? movingRight : !movingRight;
+        }
+    }
+
+    public void TriggerWinAnimation()
+    {
+        // Clear any existing triggers first
+        animator.ResetTrigger(TRIGGER_RESET);
+        animator.ResetTrigger(TRIGGER_EXPLODE);
+        animator.SetTrigger(TRIGGER_WIN);
+    }
+
+    public void TriggerExplosionAnimation()
+    {
+        // Clear any existing triggers first
+        animator.ResetTrigger(TRIGGER_RESET);
+        animator.ResetTrigger(TRIGGER_WIN);
+        animator.SetTrigger(TRIGGER_EXPLODE);
+    }
+
+    public void ResetToIdle()
+    {
+        // Clear other triggers first
+        animator.ResetTrigger(TRIGGER_WIN);
+        animator.ResetTrigger(TRIGGER_EXPLODE);
+        animator.SetTrigger(TRIGGER_RESET);
+    }
+
+
 }

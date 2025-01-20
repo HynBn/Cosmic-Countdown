@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 3155647682379788956}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.34, y: -11.85, z: 0}
+  m_LocalPosition: {x: 4.34, y: -11.85, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -244,8 +244,9 @@ MonoBehaviour:
   spawn2: {fileID: 5166412411821871640}
   player1: {fileID: 487354016737299672}
   player2: {fileID: 3500260121499961190}
-  timerDuration: 15
-  roundDelay: 3
+  timerDuration: 3
+  roundDelay: 2
+  endRoundDelay: 3
   gameUI: {fileID: 2000182294401432968}
 --- !u!1 &4176491712772265066
 GameObject:
@@ -419,7 +420,7 @@ Transform:
   m_GameObject: {fileID: 7780222170020176705}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.290831, y: 0.20234086, z: 0.00031812582}
+  m_LocalPosition: {x: 2.290831, y: 0.20234086, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -486,7 +487,7 @@ Transform:
   m_GameObject: {fileID: 8919526564018516855}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.89, y: -11.94, z: 0}
+  m_LocalPosition: {x: -12.89, y: -11.94, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -500,6 +501,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1125424673808913596}
     m_Modifications:
+    - target: {fileID: -6249531339393066160, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 2519363732977372473}
     - target: {fileID: 525727004637859996, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
       propertyPath: m_Color.b
       value: 0.28401804
@@ -526,7 +531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251801267986887185, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00031812582
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2251801267986887185, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
       propertyPath: m_LocalRotation.w
@@ -594,6 +599,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1125424673808913596}
     m_Modifications:
     - target: {fileID: -6249531339393066160, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 2519363732977372473}
+    - target: {fileID: -6249531339393066160, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
       propertyPath: isPlayerOne
       value: 0
       objectReference: {fileID: 0}
@@ -607,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2251801267986887185, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.00031812582
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 2251801267986887185, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
       propertyPath: m_LocalRotation.w
@@ -637,10 +646,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3666138898669399426, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.14
+      objectReference: {fileID: 0}
     - target: {fileID: 4430296163673877177, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
       propertyPath: m_Name
       value: Player 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7910481537018182816, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ed65ad26d4d149948978011660eea842, type: 2}
+    - target: {fileID: 8971381404117674749, guid: f27ff25d5e0718a4d981896cca40e017, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -7050993540882883828, guid: 75f1b0c783dfe91408ecfe278d122df0, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
