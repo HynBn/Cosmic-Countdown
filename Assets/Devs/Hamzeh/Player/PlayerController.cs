@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [Header("Surface Detection")]
     [SerializeField] private float gravityCheckRadius = 5f;
     [SerializeField] private LayerMask surfaceLayers;
+    [SerializeField] private GameManager gameManager;
 
     [Header("Player Settings")]
     [SerializeField] private bool isPlayerOne = true; // Player 1 or Player 2 [true = Player 1, false = Player 2]
@@ -17,6 +18,9 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private readonly string IS_MOVING = "IsMoving";
     private readonly string IS_JUMPING = "IsJumping";
+    private readonly string TRIGGER_WIN = "TriggerWin";
+    private readonly string TRIGGER_EXPLODE = "TriggerExplode";
+    private readonly string TRIGGER_RESET = "TriggerReset";
 
     private PlayerControls controls;
     private Rigidbody2D rb;
@@ -88,14 +92,19 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        FindNearestSurface();
-        CalculateSurfaceDirections();
-        HandleGravity();
-        HandleMovement();
-        UpdateMovementAnimation();
+        if (gameManager.IsGameActive())
+        {
 
-        // Update jumping animation based on grounded state
-        animator.SetBool(IS_JUMPING, !IsGrounded());
+
+            FindNearestSurface();
+            CalculateSurfaceDirections();
+            HandleGravity();
+            HandleMovement();
+            UpdateMovementAnimation();
+
+            // Update jumping animation based on grounded state
+            animator.SetBool(IS_JUMPING, !IsGrounded());
+        }
     }
 
     private void FindNearestSurface()
@@ -169,24 +178,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateMovementAnimation()
-    {
-        bool isMoving = Mathf.Abs(moveInput.x) > 0.1f;
-        animator.SetBool(IS_MOVING, isMoving);
-
-        if (isMoving && currentSurface != null)
-        {
-            // Using surfaceDirection.y to determine if we're upside down
-            bool isUpsideDown = surfaceDirection.y < 0;
-
-            // We already have surfaceRight calculated
-            bool movingRight = Vector2.Dot(moveInput, surfaceRight) > 0;
-
-            // Since sprite faces left by default, we invert the logic
-            spriteRenderer.flipX = isUpsideDown ? movingRight : !movingRight;
-        }
-    }
-
     private void Jump()
     {
         if (IsGrounded())
@@ -207,4 +198,51 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, gravityCheckRadius);
     }
+
+    // Animation ---------------------------------------------------------------
+
+    private void UpdateMovementAnimation()
+    {
+      
+        bool isMoving = Mathf.Abs(moveInput.x) > 0.1f;
+        animator.SetBool(IS_MOVING, isMoving);
+
+        if (isMoving && currentSurface != null)
+        {
+            // Using surfaceDirection.y to determine if we're upside down
+            bool isUpsideDown = surfaceDirection.y < 0;
+
+            // We already have surfaceRight calculated
+            bool movingRight = Vector2.Dot(moveInput, surfaceRight) > 0;
+
+            // Since sprite faces left by default, we invert the logic
+            spriteRenderer.flipX = isUpsideDown ? movingRight : !movingRight;
+        }
+    }
+
+    public void TriggerWinAnimation()
+    {
+        // Clear any existing triggers first
+        animator.ResetTrigger(TRIGGER_RESET);
+        animator.ResetTrigger(TRIGGER_EXPLODE);
+        animator.SetTrigger(TRIGGER_WIN);
+    }
+
+    public void TriggerExplosionAnimation()
+    {
+        // Clear any existing triggers first
+        animator.ResetTrigger(TRIGGER_RESET);
+        animator.ResetTrigger(TRIGGER_WIN);
+        animator.SetTrigger(TRIGGER_EXPLODE);
+    }
+
+    public void ResetToIdle()
+    {
+        // Clear other triggers first
+        animator.ResetTrigger(TRIGGER_WIN);
+        animator.ResetTrigger(TRIGGER_EXPLODE);
+        animator.SetTrigger(TRIGGER_RESET);
+    }
+
+
 }

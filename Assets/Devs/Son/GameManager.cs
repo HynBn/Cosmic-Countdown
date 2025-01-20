@@ -64,9 +64,11 @@ public class GameManager : MonoBehaviour, IGameContext
 
     private IEnumerator StartRoundRoutine()
     {
-        // Start round transition
         SetPlayerControlsEnabled(false);
+        player1.Controller.ResetToIdle();
+        player2.Controller.ResetToIdle();
         PlacePlayersAtSpawns();
+       
 
         if (gameUI != null)
         {
@@ -75,8 +77,7 @@ public class GameManager : MonoBehaviour, IGameContext
 
         yield return new WaitForSeconds(roundDelay);
 
-
-        // End round transition and start round
+        // Start the round
         isRoundActive = true;
         SetPlayerControlsEnabled(true);
         AssignBomb();
@@ -116,8 +117,13 @@ public class GameManager : MonoBehaviour, IGameContext
         isRoundActive = false;
         SetPlayerControlsEnabled(false);
 
-        // This is where you could trigger any end-of-round animations or effects
-        // For example: gameUI.ShowRoundEndAnimation();
+        // Determine winner and loser
+        Player winner = player2.Attributes.HasBomb ? player1 : player2;
+        Player loser = winner == player1 ? player2 : player1;
+
+        // Trigger respective animations
+        winner.Controller.TriggerWinAnimation();
+        loser.Controller.TriggerExplosionAnimation();
 
         yield return new WaitForSeconds(endRoundDelay);
 
