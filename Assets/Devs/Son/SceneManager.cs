@@ -71,6 +71,10 @@ public class MySceneManager : MonoBehaviour
     {
         Debug.Log("Game is quitting...");
         Application.Quit();
+
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 
 }
