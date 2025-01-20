@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    public float BaseMoveSpeed { get; private set; } = 15f;
-    public float BaseJumpForce { get; private set; } = 30f;
+    public float BaseMoveSpeed { get; private set; } = 10f;
+    public float BaseJumpForce { get; private set; } = 20f;
     public float BaseGravityStrength { get; private set; } = 100f;
     public int BaseDirection { get; private set; } = 1;
 
