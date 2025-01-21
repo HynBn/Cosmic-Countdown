@@ -9,16 +9,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5076147268543371189, guid: 742129e219378944e8d41b24a368db9f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2877809833201297797, guid: 360ec891d17f03347a87d24e9e56291c, type: 3}
+    - target: {fileID: 5076147268543371189, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_Color.b
-      value: 0.7924528
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5076147268543371189, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_Color.g
-      value: 0.7471231
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5076147268543371189, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_Color.r
-      value: 0.25044498
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5174145634478336187, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -62,7 +66,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6133796624182506459, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_Name
-      value: BaseItem Variant
+      value: ItemSwapLocations
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238130738911019083, guid: 742129e219378944e8d41b24a368db9f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238130738911019083, guid: 742129e219378944e8d41b24a368db9f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.58
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

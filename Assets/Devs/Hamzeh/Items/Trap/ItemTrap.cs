@@ -5,6 +5,6 @@ public class ItemTrap : BaseItem
 {
     protected override void ApplyEffect(Player player)
     {
-        player.Modifier.ModifyMoveSpeed(0.0f, 2.0f);
+        player.Modifier.ModifyMoveSpeed(0.0f, 1.0f);
     }
 }

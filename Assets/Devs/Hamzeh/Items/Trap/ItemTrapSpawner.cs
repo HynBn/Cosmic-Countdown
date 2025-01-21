@@ -12,6 +12,6 @@ public class ItemTrapSpawner : BaseItem
 
     protected override void ApplyEffect(Player player)
     {
-        itemManager.SpawnTrapAfterDelay(trapPrefab, transform.position, 0.3f, spawnPoint);
+        itemManager.SpawnTrapAfterDelay(trapPrefab, transform.position, 0.8f, spawnPoint);
     }
 }

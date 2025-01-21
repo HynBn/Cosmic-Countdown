@@ -9,16 +9,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5076147268543371189, guid: 742129e219378944e8d41b24a368db9f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2099055159055310883, guid: 87861c8e5ee9210488724640ac89036d, type: 3}
+    - target: {fileID: 5076147268543371189, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_Color.b
-      value: 0.35799634
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5076147268543371189, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_Color.g
-      value: 0.33468318
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5076147268543371189, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_Color.r
-      value: 0.6509434
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5174145634478336187, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -62,7 +66,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6133796624182506459, guid: 742129e219378944e8d41b24a368db9f, type: 3}
       propertyPath: m_Name
-      value: BaseItem Variant
+      value: ItemTrapSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238130738911019083, guid: 742129e219378944e8d41b24a368db9f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 7238130738911019083, guid: 742129e219378944e8d41b24a368db9f, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.58
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -89,5 +101,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48214219863b7a947917b6a1ff42768d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemManager: {fileID: 0}
   trapPrefab: {fileID: 638209815405145893, guid: 2e1011c6ecc5c0c4ca4f587689d6176a, type: 3}

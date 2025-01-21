@@ -394,7 +394,7 @@ PrefabInstance:
       objectReference: {fileID: 1520961074}
     - target: {fileID: 2519363732977372473, guid: 9da9532420461e04a881fe79d4a62811, type: 3}
       propertyPath: timerDuration
-      value: 60
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5166412411821871640, guid: 9da9532420461e04a881fe79d4a62811, type: 3}
       propertyPath: m_LocalPosition.x
