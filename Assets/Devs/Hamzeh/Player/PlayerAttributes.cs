@@ -14,7 +14,6 @@ public class PlayerAttributes : MonoBehaviour
 
     // event triggered when the bomb changes and notifies subscribers
     public event System.Action<bool> OnBombStatusChanged;
-    [SerializeField]
     private bool _hasBomb;
     public bool HasBomb
     {

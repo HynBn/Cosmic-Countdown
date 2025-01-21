@@ -230,6 +230,7 @@ public class PlayerController : MonoBehaviour
 
     public void TriggerExplosionAnimation()
     {
+        player.Attributes.HasBomb = false;
         // Clear any existing triggers first
         animator.ResetTrigger(TRIGGER_RESET);
         animator.ResetTrigger(TRIGGER_WIN);

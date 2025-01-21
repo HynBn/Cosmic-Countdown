@@ -25,7 +25,6 @@ public class BombInteraction : MonoBehaviour
     private void Start()
     {
         player.Attributes.OnBombStatusChanged += HandleBombStatusChanged;
-        bombSprite.enabled = player.Attributes.HasBomb;
     }
 
     private void OnDestroy()
