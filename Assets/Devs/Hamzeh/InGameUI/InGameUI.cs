@@ -36,8 +36,8 @@ public class InGameUI : MonoBehaviour
 
     private void UpdateLivesDisplay()
     {
-        player1LivesText.text = $"P1: {gameManager.Player1Lives}";
-        player2LivesText.text = $"P2: {gameManager.Player2Lives}";
+        player1LivesText.text = $":{gameManager.Player1Lives}";
+        player2LivesText.text = $"{gameManager.Player2Lives}:";
     }
 
     private void UpdatePauseDisplay()
@@ -53,7 +53,9 @@ public class InGameUI : MonoBehaviour
         if (gameManager.IsGameActive())
         {
             float time = gameManager.GetBombTimer();
-            timerText.text = $"Time: {Mathf.Ceil(time)}";
+            //timerText.text = $"Time: {Mathf.Ceil(time)}";
+            timerText.text = $"{Mathf.Ceil(time)}";
+
         }
     }
 

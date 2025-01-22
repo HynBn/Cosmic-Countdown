@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Rocket 2_0: 1777540199264778203
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
