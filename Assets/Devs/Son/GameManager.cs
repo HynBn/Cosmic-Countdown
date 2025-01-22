@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour, IGameContext
 
     private void InitializeGame()
     {
-        Player1Lives = 2;
-        Player2Lives = 2;
+        Player1Lives = 3;
+        Player2Lives = 3;
         StartRound();
     }
 
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour, IGameContext
         PlacePlayersAtSpawns();
         string winner = Player1Lives == 0 ? "Player2" : "Player1";
         PlayerPrefs.SetString("Winner", winner);
-
+        MySceneManager.Instance.LoadEndScreen();
     }
 
     private IEnumerator StartTimer()

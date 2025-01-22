@@ -45,25 +45,30 @@ public class MySceneManager : MonoBehaviour
 
     public void LoadMap3()
     {
-        SceneManager.LoadScene(5);
-        lastMap = 5;
-    }
-
-    // Load the Map Select scene
-    public void LoadMapSelect()
-    {
         SceneManager.LoadScene(3);
+        lastMap = 3;
     }
-
     public void LoadPreviousMap()
     {
         SceneManager.LoadScene(lastMap);
     }
 
+    // Load the Map Select scene
+    public void LoadMapSelect()
+    {
+        SceneManager.LoadScene(4);
+    }
+
+
     // Load the End Screen scene
     public void LoadEndScreen()
     {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(5);
+    }
+
+    public void LoadSettingsScreen()
+    {
+        SceneManager.LoadScene(6);
     }
 
     // Quit the game

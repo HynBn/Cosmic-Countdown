@@ -5,21 +5,39 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Devs/Luong/Scene/Main Menu.unity
     guid: 7dc036ff5d3694d4fa30ad4940108ba8
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
-  - enabled: 1
+  - enabled: 0
     path: Assets/Devs/Luong/Scene/TestingGameUI.unity
     guid: d0d8a5e587002904d88facd0eb905710
   - enabled: 0
     path: Assets/Devs/Hamzeh/Small Map.unity
     guid: 269ab1864db57ee448de6485b2e6e421
   - enabled: 1
+    path: Assets/Devs/Hyun/Scenes/Main Menu.unity
+    guid: d4bad39ccc9a73b4886a7e18af32f8d6
+  - enabled: 1
+    path: Assets/Devs/Hyun/Scenes/Maps/Small Map.unity
+    guid: 9e7868001c030be4db3ea4052745adad
+  - enabled: 1
+    path: Assets/Devs/Hyun/Scenes/Maps/Medium Map.unity
+    guid: 03094e1170b867843b618f89dedfc788
+  - enabled: 1
+    path: Assets/Devs/Hyun/Scenes/Maps/Big Map.unity
+    guid: 015e8e2de6a5699429323d6091b26fa6
+  - enabled: 1
+    path: Assets/Devs/Hyun/Scenes/MapSelect.unity
+    guid: e9865b1546d038940a68ce631216172e
+  - enabled: 1
     path: Assets/Devs/Son/EndScene.unity
     guid: 56be15bbc6cbd8a42988a13d44638943
+  - enabled: 1
+    path: Assets/Devs/Hyun/Scenes/Settings.unity
+    guid: b64e8d1f55d650743b84b76061ce2566
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
