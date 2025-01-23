@@ -8,8 +8,8 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private Transform spawnPointsParent;
     [SerializeField] private List<BaseItem> itemPrefabs = new List<BaseItem>();
 
-    private const int MAX_ITEMS = 5;
-    private const float SPAWN_INTERVAL = 1f;
+    private const int MAX_ITEMS = 3;
+    private const float SPAWN_INTERVAL = 5f;
     private List<Transform> availableSpawnPoints;
     private List<BaseItem> activeItems = new List<BaseItem>();
     private int currentItemCount = 0;

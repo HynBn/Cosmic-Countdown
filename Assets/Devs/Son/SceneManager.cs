@@ -6,7 +6,7 @@ public class MySceneManager : MonoBehaviour
 
     public static MySceneManager Instance;
 
-    private int lastMap = 3;
+    private static int lastMap = 4;
 
     private void Awake()
     {
