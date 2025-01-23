@@ -127,16 +127,7 @@ public class GameManager : MonoBehaviour, IGameContext
 
         yield return new WaitForSeconds(endRoundDelay);
 
-        //UpdateLives();
-
-        if(winner == player1 && loser == player2)
-        {
-            Player2Lives--;
-        }
-        else
-        {
-            Player1Lives--;
-        }
+        UpdateLives();
 
         if (Player1Lives == 0 || Player2Lives == 0)
         {
