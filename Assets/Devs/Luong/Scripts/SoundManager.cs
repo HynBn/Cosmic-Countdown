@@ -15,9 +15,13 @@ public class SoundManager : MonoBehaviour
     public AudioClip SmallMap_background;
 
     public AudioClip tick;
-    public AudioClip boom;
+    public AudioClip explode;
     public AudioClip pickUp;
-
+    public AudioClip bumpInto;
+    public AudioClip swap;
+    public AudioClip rocket;
+    public AudioClip reverse;
+    public AudioClip trap;
 
     void Start() {
         MusicSource.clip = BigMap_background;
