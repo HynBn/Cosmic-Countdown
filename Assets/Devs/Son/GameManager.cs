@@ -127,7 +127,12 @@ public class GameManager : MonoBehaviour, IGameContext
 
         yield return new WaitForSeconds(endRoundDelay);
 
-        UpdateLives();
+        if(winner == player1 && loser == player2){
+            Player2Lives--;
+        }
+        else{
+            Player1Lives--;
+        }
 
         if (Player1Lives == 0 || Player2Lives == 0)
         {
@@ -144,7 +149,7 @@ public class GameManager : MonoBehaviour, IGameContext
         StartCoroutine(EndRoundRoutine());
     }
 
-    private void UpdateLives()
+/*     private void UpdateLives()
     {
         if (player1.Attributes.HasBomb)
         {
@@ -154,7 +159,7 @@ public class GameManager : MonoBehaviour, IGameContext
         {
             Player2Lives--;
         }
-    }
+    }  */
 
     private void EndGame()
     {
