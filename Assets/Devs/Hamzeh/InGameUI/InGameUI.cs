@@ -1,5 +1,7 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour
 {
@@ -16,15 +18,16 @@ public class InGameUI : MonoBehaviour
 
     [Header("Pause")]
     [SerializeField] private TextMeshProUGUI pauseText;
+    [SerializeField] private Button mainMenuButton;
 
     [SerializeField]
     private GameManager gameManager;
 
     private void Start()
     {
-        // Initialize pause text as hidden
         pauseText.enabled = false;
-        pauseText.text = "PAUSED";
+        mainMenuButton.onClick.AddListener(LoadMainMenu);
+        mainMenuButton.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -45,6 +48,8 @@ public class InGameUI : MonoBehaviour
         if (gameManager != null)
         {
             pauseText.enabled = gameManager.IsPaused;
+            mainMenuButton.gameObject.SetActive(gameManager.IsPaused);
+
         }
     }
 
@@ -53,7 +58,6 @@ public class InGameUI : MonoBehaviour
         if (gameManager.IsGameActive())
         {
             float time = gameManager.GetBombTimer();
-            //timerText.text = $"Time: {Mathf.Ceil(time)}";
             timerText.text = $"{Mathf.Ceil(time)}";
 
         }
@@ -91,5 +95,11 @@ public class InGameUI : MonoBehaviour
         }
 
         roundStartGroup.alpha = 0;
+    }
+
+    private void LoadMainMenu()
+    {
+        Time.timeScale = 1f;
+        MySceneManager.Instance.LoadMainMenu();
     }
 }
