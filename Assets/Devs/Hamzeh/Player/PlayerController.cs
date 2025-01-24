@@ -203,20 +203,14 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateMovementAnimation()
     {
-      
         bool isMoving = Mathf.Abs(moveInput.x) > 0.1f;
         animator.SetBool(IS_MOVING, isMoving);
 
         if (isMoving && currentSurface != null)
         {
-            // Using surfaceDirection.y to determine if we're upside down
-            bool isUpsideDown = surfaceDirection.y < 0;
-
-            // We already have surfaceRight calculated
-            bool movingRight = Vector2.Dot(moveInput, surfaceRight) > 0;
-
-            // Since sprite faces left by default, we invert the logic
-            spriteRenderer.flipX = isUpsideDown ? movingRight : !movingRight;
+            // For wall movement, we just need to know if we're moving with or against gravity
+            bool movingUp = moveInput.x > 0;
+            spriteRenderer.flipX = movingUp;
         }
     }
 
@@ -243,6 +237,8 @@ public class PlayerController : MonoBehaviour
         animator.ResetTrigger(TRIGGER_WIN);
         animator.ResetTrigger(TRIGGER_EXPLODE);
         animator.SetTrigger(TRIGGER_RESET);
+        animator.SetBool(IS_JUMPING, false);
+        animator.SetBool(IS_MOVING, false);
     }
 
 
