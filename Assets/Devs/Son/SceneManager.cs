@@ -55,6 +55,7 @@ public class MySceneManager : MonoBehaviour
     public void LoadPreviousMap()
     {
         SceneManager.LoadScene(lastMap);
+        SoundManager.instance.PlayBackgroundMusic(lastMap);
     }
 
     // Load the Map Select scene
