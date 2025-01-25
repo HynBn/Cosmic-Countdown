@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip trap;
     public AudioClip trap_spawn;
 
+    [Header("Audiomixer")]
+    [SerializeField] private AudioMixer m_Mixer;
+
 
     void Awake()
     {
@@ -48,6 +52,17 @@ public class SoundManager : MonoBehaviour
         MusicSource.clip = Main_menu_background;
         MusicSource.loop = true;
         MusicSource.Play();
+
+        if (PlayerPrefs.HasKey("musicVolume"))
+        {
+            SoundManager.instance.SetMusicVolume(PlayerPrefs.GetFloat("musicVolume"));
+            SoundManager.instance.SetSFXVolume(PlayerPrefs.GetFloat("sfxVolume"));
+        }
+        else
+        {
+            SoundManager.instance.SetMusicVolume(0.30f);
+            SoundManager.instance.SetSFXVolume(0.30f);
+        }
     }
 
    public void PlayMusic(AudioClip clip){
@@ -89,6 +104,19 @@ public class SoundManager : MonoBehaviour
             default:
                 break; // No music for other scenes
         }
+    }
+
+
+    public void SetMusicVolume(float volume)
+    {
+        m_Mixer.SetFloat("Music", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("musicVolume", volume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        m_Mixer.SetFloat("SFX", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("sfxVolume", volume);
     }
 
 

@@ -51,6 +51,9 @@ MonoBehaviour:
   BigMap_background: {fileID: 8300000, guid: 63e2d732badada7439c476ac14746617, type: 3}
   MediumMap_background: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
   SmallMap_background: {fileID: 8300000, guid: 89f935015cc98724a862a586326fdf21, type: 3}
+  Main_menu_background: {fileID: 0}
+  Select_map_background: {fileID: 0}
+  End_game_background: {fileID: 0}
   tick: {fileID: 8300000, guid: f611744c66d2d8b46b5228252ae8f364, type: 3}
   explode: {fileID: 8300000, guid: ad83c3b3c412f2b4b81e33501fa8d345, type: 3}
   pickUp: {fileID: 8300000, guid: d10ca312bd7fd494688cefeaffe1195d, type: 3}
@@ -59,6 +62,8 @@ MonoBehaviour:
   rocket: {fileID: 8300000, guid: f84f30eb105a2cc4f8ef2ccbefe9fc79, type: 3}
   reverse: {fileID: 8300000, guid: 5d1c0861634c14549b650f8254caf713, type: 3}
   trap: {fileID: 8300000, guid: 44f3bb6cd763fbc4eb6843e0b69afa14, type: 3}
+  trap_spawn: {fileID: 0}
+  m_Mixer: {fileID: 24100000, guid: 77e2fc8574cbd9a4baa77d73f99a6ced, type: 2}
 --- !u!1 &3614798140012940775
 GameObject:
   m_ObjectHideFlags: 0
