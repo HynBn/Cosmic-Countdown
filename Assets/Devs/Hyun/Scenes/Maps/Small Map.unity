@@ -507,6 +507,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8852218095832987097, guid: 0a4316e7a92871b40862ac240e96b2bf, type: 3}
+      propertyPath: timerDuration
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3053182567186065741, guid: 0a4316e7a92871b40862ac240e96b2bf, type: 3}
