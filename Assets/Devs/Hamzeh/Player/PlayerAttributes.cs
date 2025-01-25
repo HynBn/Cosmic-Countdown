@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class PlayerAttributes : MonoBehaviour
 {
-    public float BaseMoveSpeed { get; private set; } = 10f;
-    public float BaseJumpForce { get; private set; } = 20f;
-    public float BaseGravityStrength { get; private set; } = 100f;
+    public float BaseMoveSpeed { get; private set; } = 12f;
+    public float BaseJumpForce { get; private set; } = 28f;
+    public float BaseGravityStrength { get; private set; } = 150f;
     public int BaseDirection { get; private set; } = 1;
 
     public float MoveSpeed { get; set; }
@@ -22,6 +22,8 @@ public class PlayerAttributes : MonoBehaviour
         {
             _hasBomb = value;
             OnBombStatusChanged?.Invoke(_hasBomb);
+            BaseMoveSpeed = _hasBomb ? 14f : 12f;
+            MoveSpeed = BaseMoveSpeed;
         }
     }
 
