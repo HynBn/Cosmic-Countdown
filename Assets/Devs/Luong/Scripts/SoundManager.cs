@@ -22,7 +22,8 @@ public class SoundManager : MonoBehaviour
 
     public AudioClip tick;
     public AudioClip explode;
-    public AudioClip pickUp;
+    public AudioClip time;
+    public AudioClip speed;
     public AudioClip bumpInto;
     public AudioClip swap;
     public AudioClip rocket;
@@ -77,7 +78,6 @@ public class SoundManager : MonoBehaviour
     public void PlaySFX(AudioClip clip){
         SFXSource.PlayOneShot(clip);
     }
-    
 
     public void PlayBackgroundMusic(int sceneIndex)
     {
