@@ -7,8 +7,9 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [Header("---------- Audio Source ------------")]
-   [SerializeField] AudioSource MusicSource;
-   [SerializeField] AudioSource SFXSource;
+    [SerializeField] AudioSource MusicSource;
+    [SerializeField] AudioSource SFXSource;
+    [SerializeField] AudioSource TickingSource;
 
     [Header("---------- Audio Clip ------------")]
     public AudioClip BigMap_background;
@@ -77,6 +78,21 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySFX(AudioClip clip){
         SFXSource.PlayOneShot(clip);
+    }
+
+    public void PlayTicking()
+    {
+            TickingSource.loop = true;
+            TickingSource.clip = tick;
+            TickingSource.Play();
+    }
+
+    public void StopTicking()
+    {
+        if (TickingSource.isPlaying)
+        {
+            TickingSource.Stop();
+        }
     }
 
     public void PlayBackgroundMusic(int sceneIndex)
