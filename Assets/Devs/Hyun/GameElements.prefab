@@ -1728,7 +1728,7 @@ MonoBehaviour:
   spawn2: {fileID: 4436840674675372356}
   player1: {fileID: 5501802004715688698}
   player2: {fileID: 7783370387124114232}
-  timerDuration: 60
+  timerDuration: 3
   roundDelay: 3
   endRoundDelay: 3
   gameUI: {fileID: 3063034744229955673}
