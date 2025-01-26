@@ -6,28 +6,28 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Devs/Hyun/Scenes/Main Menu.unity
+    path: Assets/Scenes/Main Menu.unity
     guid: d4bad39ccc9a73b4886a7e18af32f8d6
   - enabled: 1
-    path: Assets/Devs/Hyun/Scenes/Maps/Small Map.unity
+    path: Assets/Scenes/Maps/Small Map.unity
     guid: 9e7868001c030be4db3ea4052745adad
   - enabled: 1
-    path: Assets/Devs/Hyun/Scenes/Maps/Medium Map.unity
+    path: Assets/Scenes/Maps/Medium Map.unity
     guid: 03094e1170b867843b618f89dedfc788
   - enabled: 1
-    path: Assets/Devs/Hyun/Scenes/Maps/Big Map.unity
+    path: Assets/Scenes/Maps/Big Map.unity
     guid: 015e8e2de6a5699429323d6091b26fa6
   - enabled: 1
-    path: Assets/Devs/Hyun/Scenes/MapSelect.unity
+    path: Assets/Scenes/MapSelect.unity
     guid: e9865b1546d038940a68ce631216172e
   - enabled: 1
-    path: Assets/Devs/Hyun/Scenes/EndScene.unity
+    path: Assets/Scenes/EndScene.unity
     guid: 57b3c64378478ea47a4adf05c1a27214
   - enabled: 1
-    path: Assets/Devs/Son/Sound/Settings.unity
-    guid: 5fa0a502ce5981746801ef0534320d49
+    path: Assets/Scenes/Settings.unity
+    guid: 661b6146a78e8274b99f9ffa49535154
   - enabled: 1
-    path: Assets/Devs/Hyun/Scenes/RulesScene.unity
+    path: Assets/Scenes/RulesScene.unity
     guid: 2c42e2ba54aedc44b98f96db386bc6b5
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
