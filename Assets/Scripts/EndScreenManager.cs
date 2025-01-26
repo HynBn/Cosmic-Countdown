@@ -4,7 +4,7 @@ using TMPro;
 public class EndScreenManager : MonoBehaviour
 {
     [SerializeField]
-    private TextMeshProUGUI winnerText;
+    private TextMeshPro winnerText;
     [SerializeField]
     private GameObject player1;
     [SerializeField]
