@@ -18,15 +18,19 @@ We decided to create a 2D multiplayer game inspired by the concept of "hot potat
 
 While this game is complete in its current form, future updates are possible but not guaranteed :)
 The Team: 
-    SonXH
-        [GitHub](https://github.com/SonXH)
+    
+SonXH
+        [GitHub](https://github.com/SonXH); 
         [Itch.io](https://itch.io/profile/sonxh)
-    2xhamzeh
-        [GitHub](https://github.com/2xhamzeh)
+    
+2xhamzeh
+        [GitHub](https://github.com/2xhamzeh); 
         [Itch.io](https://itch.io/profile/2xhamzeh)
-    DumpyBird
-        [GitHub](https://github.com/jameshnl232)
+    
+DumpyBird
+        [GitHub](https://github.com/jameshnl232); 
         [Itch.io](https://itch.io/profile/dumpybird)
-    HynBn
-        [GitHub](https://github.com/HynBn)
+    
+HynBn
+        [GitHub](https://github.com/HynBn); 
         [Itch.io](https://hyn-bn.itch.io/)
