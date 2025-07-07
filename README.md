@@ -1,4 +1,4 @@
-What is Cosmic Countdown?
+<h1>What is Cosmic Countdown?</h1>
 
 This game is a local multiplayer experience designed for 2 players. Both players spawn on a single map, with one of them starting as the “Bomber” of a bomb. The Bomber’s goal is to tag the other player—the “Runner”—to pass the bomb before it explodes. The Runner’s goal is to avoid getting tagged. 
 
@@ -10,7 +10,7 @@ The gameplay also incorporates various items to give both players temporary adva
 
 There is a total of 3 Maps to select through, and play with your friend. 
 
-About this Project
+<h1>About this Project</h1> 
 
 This project was developed as part of a university assignment. The goal was to create either a small 2D or 3D game, or a simple game development tool within a few months. Unlike the previous assignment, which was a solo effort, this time we worked as a team.
 
