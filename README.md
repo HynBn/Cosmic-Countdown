@@ -17,8 +17,7 @@ This project was developed as part of a university assignment. The goal was to c
 We decided to create a 2D multiplayer game inspired by the concept of "hot potato." The development process included the use of several free assets, alongside custom assets created by our team to give the game its unique identity.
 
 While this game is complete in its current form, future updates are possible but not guaranteed :)
-The Team
-
+The Team: 
     SonXH
         [GitHub](https://github.com/SonXH)
         [Itch.io](https://itch.io/profile/sonxh)
